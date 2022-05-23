@@ -19,13 +19,30 @@ public class Console {
 	}
 	public void handlePlace(String[] commandArgs) {
 		String xStr,yStr,directionStr = null;
-		int x,y;
+		int x = 0,y = 0;
+		Direction direction=null;
+		//argument list should contain x,y,direction
+		if(commandArgs.length!=3) {
+			System.out.println("Invalid arguments!");
+			return;
+		}
 		xStr = commandArgs[0];
 		yStr = commandArgs[1];
 		directionStr = commandArgs[2];
-		Direction direction = Direction.valueOf(directionStr);
-		x = Integer.parseInt(xStr);
-		y = Integer.parseInt(yStr);
+		try {
+			 direction = Direction.valueOf(directionStr);
+		}catch(IllegalArgumentException e) {
+			System.out.println("Invalid direction");
+			return;
+		}
+		
+		try {
+			x = Integer.parseInt(xStr);
+			y = Integer.parseInt(yStr);
+		}catch(NumberFormatException e) {
+			System.out.println("Invalid position!");
+			return;
+		}
 		
 		try {
 			this.robot.setPosition(new Position(x,y));
