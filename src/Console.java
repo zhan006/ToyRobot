@@ -20,22 +20,23 @@ public class Console {
 	public void handlePlace(String[] commandArgs) {
 		String xStr,yStr,directionStr = null;
 		int x = 0,y = 0;
-		Direction direction=null;
+		Direction direction = null;
 		//argument list should contain x,y,direction
-		if(commandArgs.length!=3) {
+		if(commandArgs.length != 3) {
 			System.out.println("Invalid arguments!");
 			return;
 		}
 		xStr = commandArgs[0];
 		yStr = commandArgs[1];
 		directionStr = commandArgs[2];
+		//VALIDATE: direction input
 		try {
 			 direction = Direction.valueOf(directionStr);
 		}catch(IllegalArgumentException e) {
 			System.out.println("Invalid direction");
 			return;
 		}
-		
+		//VALIDATE: position input
 		try {
 			x = Integer.parseInt(xStr);
 			y = Integer.parseInt(yStr);
@@ -82,38 +83,42 @@ public class Console {
 	
 
 	public static void main(String[] args) {
-		System.out.println("hello word");
+		System.out.println("Ready to serve commands!");
 		try (Scanner scanner = new Scanner(System.in)) {
 			Console console = new Console();
 			while(true) {
-				String commandStr = scanner.nextLine().trim();
-				Command command=null;
-				try {				
-					command = new Command(commandStr);
-				}
-				catch(InvalidCommandException e) {
+				try {
+					String commandStr = scanner.nextLine().trim();
+					Command command = null;
+					try {				
+						command = new Command(commandStr);
+					}
+					catch(InvalidCommandException e) {
+						System.out.println(e.getMessage());
+						continue;
+					}
+					switch(command.commandType) {
+					case PLACE:
+						console.handlePlace(command.commandArgs);
+						break;
+					case RIGHT:
+						console.handleTurn(TurningDirection.RIGHT);
+						break;
+					case LEFT:
+						console.handleTurn(TurningDirection.LEFT);
+						break;
+					case MOVE:
+						console.handleMove();
+						break;
+					case REPORT:
+						console.handleReport();
+						break;
+					default:
+						System.out.println("Unknown command!");
+					}	
+				}catch(Exception e) {
+					System.out.println("unknown error!");
 					System.out.println(e.getMessage());
-					continue;
-				}
-				
-				switch(command.commandType) {
-				case PLACE:
-					console.handlePlace(command.commandArgs);
-					break;
-				case RIGHT:
-					console.handleTurn(TurningDirection.RIGHT);
-					break;
-				case LEFT:
-					console.handleTurn(TurningDirection.LEFT);
-					break;
-				case MOVE:
-					console.handleMove();
-					break;
-				case REPORT:
-					console.handleReport();
-					break;
-				default:
-					System.out.println("Unknown command!");
 				}
 			}
 		}

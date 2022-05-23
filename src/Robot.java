@@ -35,6 +35,7 @@ public class Robot implements Movable{
 		this.position.setX(x);
 		this.position.setY(y);
 	}
+	
 	public void setPosition(Position position) throws OutOfTableBoundException{
 		if(position.getX() < this.table.getLeft() || position.getX() > this.table.getRight() || position.getY() < this.table.getBottom() || position.getY() > this.table.getTop()) {
 			throw new OutOfTableBoundException();
@@ -49,6 +50,7 @@ public class Robot implements Movable{
 	public void setDirection(Direction newDirection) {
 		this.direction = newDirection;
 	}
+	
 	@Override
 	public void move() throws OutOfTableBoundException,PositionNotInitializedException {
 		if(this.direction==null) {
@@ -110,6 +112,7 @@ public class Robot implements Movable{
 		  break;
 		}
 	}
+	
 	public String report() throws PositionNotInitializedException {
 		if(this.getDirection()==null ||this.getPosition()==null) {
 			throw new PositionNotInitializedException();
