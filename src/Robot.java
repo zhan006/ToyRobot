@@ -2,13 +2,11 @@ import Interface.Movable;
 import enums.Direction;
 import enums.TurningDirection;
 import Exception.OutOfTableBoundException;
+import Exception.PositionNotInitializedException;
 public class Robot implements Movable{
 	private Position position = null;
-	//Assume the default direction set to be north
 	private Direction direction = null;
-	//default moving step to be 1;
 	private final int STEP=1;
-	//initialize table with boundary (5,5,0,0)
 	private Table table = Table.initTable();
 	
 	public Robot() {
@@ -27,12 +25,21 @@ public class Robot implements Movable{
 		this.table = table;
 	}
 	
-	public void setPosition(int x,int y) throws OutOfTableBoundException {
+	public void setPosition(int x,int y) throws OutOfTableBoundException,PositionNotInitializedException {
 		if(x < this.table.getLeft() || x > this.table.getRight() || y < this.table.getBottom() || y > this.table.getTop()) {
 			throw new OutOfTableBoundException();
 		}
+		if(position==null || direction==null) {
+			throw new PositionNotInitializedException();
+		}
 		this.position.setX(x);
 		this.position.setY(y);
+	}
+	public void setPosition(Position position) throws OutOfTableBoundException{
+		if(position.getX() < this.table.getLeft() || position.getX() > this.table.getRight() || position.getY() < this.table.getBottom() || position.getY() > this.table.getTop()) {
+			throw new OutOfTableBoundException();
+		}
+		this.position = position;
 	}
 	
 	public Direction getDirection() {
@@ -43,7 +50,10 @@ public class Robot implements Movable{
 		this.direction = newDirection;
 	}
 	@Override
-	public void move() throws OutOfTableBoundException {
+	public void move() throws OutOfTableBoundException,PositionNotInitializedException {
+		if(this.direction==null) {
+			throw new PositionNotInitializedException();
+		}
 		switch(this.direction) {
 		  case NORTH:
 			  this.setPosition(this.position.getX(),this.position.getY()+STEP);
@@ -61,7 +71,10 @@ public class Robot implements Movable{
 	}
 	
 	@Override
-	public void turn(TurningDirection direction) {
+	public void turn(TurningDirection direction) throws PositionNotInitializedException {
+		if(this.direction == null) {
+			throw new PositionNotInitializedException();
+		}
 		switch(direction) {
 		  case RIGHT:
 			switch(this.direction) {
@@ -96,5 +109,12 @@ public class Robot implements Movable{
 			}
 		  break;
 		}
+	}
+	public String report() throws PositionNotInitializedException {
+		if(this.getDirection()==null ||this.getPosition()==null) {
+			throw new PositionNotInitializedException();
+
+		}
+		return this.getDirection().toString()+", "+this.getPosition().getX()+", "+this.getPosition().getY();
 	}
 }

@@ -3,6 +3,7 @@ import enums.Direction;
 import enums.TurningDirection;
 import Exception.OutOfTableBoundException;
 import Exception.InvalidCommandException;
+import Exception.PositionNotInitializedException;
 public class Console {
 	private Robot robot;
 	private Table table;
@@ -27,7 +28,7 @@ public class Console {
 		y = Integer.parseInt(yStr);
 		
 		try {
-			this.robot.setPosition(x, y);
+			this.robot.setPosition(new Position(x,y));
 			this.robot.setDirection(direction);
 		}
 		catch(OutOfTableBoundException exception) {
@@ -40,16 +41,26 @@ public class Console {
 			this.robot.move();
 		}catch(OutOfTableBoundException exception) {
 			System.out.println(exception.getMessage());
+		}catch(PositionNotInitializedException positionException) {
+			System.out.println(positionException.getMessage());
 		}
 	}
 	
 	public void handleTurn(TurningDirection direction) {
-		this.robot.turn(direction);
+		try {
+			this.robot.turn(direction);
+
+		}catch(PositionNotInitializedException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void handleReport() {
-		String message = this.robot.getDirection().toString()+", "+this.robot.getPosition().getX()+", "+this.robot.getPosition().getY();
-		System.out.println(message);
+		try {
+			System.out.println(this.robot.report());
+		}catch(PositionNotInitializedException e) {
+			System.out.println(e.getMessage());
+		}		
 	}
 	
 
