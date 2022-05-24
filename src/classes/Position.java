@@ -1,23 +1,30 @@
+package classes;
 
 public class Position {
-	private int x,y;
-	public Position(int x,int y) {
+	private int x, y;
+
+	public Position(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
+
 	public void setX(int x) {
 		this.x = x;
 	}
+
 	public void setY(int y) {
 		this.y = y;
 	}
+
 	public int getX() {
 		return this.x;
 	}
+
 	public int getY() {
 		return this.y;
 	}
+
 	public static Position initPosition() {
-		return new Position(0,0);
+		return new Position(0, 0);
 	}
 }
