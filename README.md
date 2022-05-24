@@ -30,6 +30,7 @@ and
 
 ## RUN the application
 
+It is highly recommended to run the project in an IDE such as Eclipse or VSCode with Extension Pack for Java as it can arrange all the necessary dependencies set-up
 ### Running in IDE
 To run the application in IDE, set the main class to be **Console.java** in the run configurations. Then if you click run button in the IDE, you should see 
 `Ready to serve commands!` in a pop-up console indicating the application is successfully launched and you can input any available command as listed in the following section.
@@ -52,7 +53,7 @@ java classes/Console
 
 ## Test
 
-It is recommended that you run the JUnit test in a IDE such as Eclipse
+It is highly recommended to run the tests in an IDE such as Eclipse or VSCode with Extension Pack for Java as it can arrange all the necessary dependencies set-up
 
 ### To run test in IDE
 
