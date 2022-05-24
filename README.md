@@ -12,7 +12,7 @@ This application is developed under Java8 with unit test setting up with JUnit4
 
 To run this application, please make sure appropiate java runtime enviroment is installed on your device and you can run this application under any IDE such as Eclipes, IntelliJ or VSCode with Console.java as the entry point of the program.
 
-Alternatively, if you want to run the application in a terminal, make sure the appropiate java sdk is installed and environment variable is set up on your device. To test if they are successfully set up, open a termial such as commandline in windows, and type
+Alternatively, if you want to run the application in a terminal, make sure the appropiate java sdk and **maven** is installed and environment variable is set up on your device. To test if they are successfully set up, open a termial such as commandline in windows, and type
 
 `java -v`
 
@@ -39,13 +39,13 @@ To run the application in IDE, set the main class to be **Console.java** in the 
 
 To run the application in the termial, you should
 
-1. Dive into the project src folder `ToyRobot\src `
-2. Compile the java file by typing `javac -d ../bin classes/Console.java` this will compile the java files and put the compiled binary to the bin folder under the project
+1. Dive into the project root folder `ToyRobot/`
+2. Compile the java file by typing `mvn package` this will compile the java files and put the compiled binary to the target folder under the project
 
-3. Go to bin folder and run the java class 
+3. Go to target/classes folder and run the java class 
 ```
-cd ../bin
-java classes/Console
+cd target/classes
+java classes.Console
 ```
   The command will drive you to the bin folder and run the entry point under classes folder
 
@@ -79,3 +79,21 @@ move the toy robot one unit forward in the direction it is currently facing.
 LEFT and RIGHT will rotate the robot 90 degrees in the specified direction without changing the position of the
 robot. REPORT will announce the X,Y and F of the robot. This can be in any form, but standard output is sufficient.
 A robot that is not on the table can choose to ignore the MOVE, LEFT, RIGHT and REPORT commands.
+
+## Sample input
+```
+PLACE 1,1,NORTH
+MOVE
+MOVE
+REPORT
+RIGHT
+MOVE
+REPORT
+```
+
+The output would be
+
+```
+NORTH, 1, 3
+EAST, 2, 3
+```
