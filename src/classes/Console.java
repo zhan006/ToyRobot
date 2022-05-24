@@ -28,7 +28,7 @@ public class Console {
 		Direction direction = null;
 
 		// argument list should contain x,y,direction
-		if (commandArgs.length != 3) {
+		if (commandArgs==null ||commandArgs.length != 3) {
 			System.out.println("Invalid arguments!");
 			return;
 		}
